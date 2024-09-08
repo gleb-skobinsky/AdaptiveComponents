@@ -36,6 +36,7 @@ fun App() {
             AdaptiveColumn(
                 horizontalPadding = 32.dp
             ) {
+                Spacer(Modifier.height(it.calculateTopPadding()))
                 Box(
                     Modifier
                         .fillMaxWidth()

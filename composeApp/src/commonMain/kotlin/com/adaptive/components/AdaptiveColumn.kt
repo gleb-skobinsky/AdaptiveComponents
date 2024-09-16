@@ -78,13 +78,21 @@ fun AdaptiveColumn(
             focusedAreaEvent.spaceFromBottom?.let { capturedBottom ->
                 snapshotFlow { imeHeight }
                     .runningHistory()
-                    .collectLatest { (prevHeight, height) ->
+                    .collectLatest { (prev, height) ->
+                        val prevHeight = prev ?: 0
                         if (height > capturedBottom) {
-                            val difference = height - (prevHeight ?: 0)
-                            scrollState.scrollBy(difference.toFloat())
-                            println("Height above bottom position: $capturedBottom $height")
+                            if (prevHeight < capturedBottom) {
+                                val difference = height - capturedBottom
+                                scrollState.scrollBy(difference)
+                            } else {
+                                val difference = height - prevHeight
+                                scrollState.scrollBy(difference.toFloat())
+                            }
                         } else {
-                            println("Height below bottom position: $capturedBottom $height")
+                            if (prevHeight > capturedBottom) {
+                                val difference = prevHeight - capturedBottom
+                                scrollState.scrollBy(-difference)
+                            }
                         }
                     }
             }

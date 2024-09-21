@@ -18,12 +18,18 @@ import adaptivecomponents.composeapp.generated.resources.phone_title
 import adaptivecomponents.composeapp.generated.resources.sign_up
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.outlined.AccountCircle
@@ -77,27 +83,16 @@ fun App() {
                 )
             }
         ) {
-            AdaptiveColumn(
-                horizontalPadding = 32.dp
+            Column(
+                Modifier
+                    .padding(horizontal = 32.dp)
+                    .imePadding()
+                    .verticalScroll(rememberScrollState())
             ) {
+            //AdaptiveColumn(horizontalPadding = 32.dp) {
                 Spacer(Modifier.height(it.calculateTopPadding()))
                 32.dp.VerticalSpacer()
-                Box(
-                    Modifier
-                        .align(Alignment.CenterHorizontally)
-                        .shadow(12.dp, CircleShape)
-                        .clip(CircleShape)
-                        .background(Color.White)
-                        .fillMaxWidth(0.6f)
-                        .aspectRatio(1f)
-                ) {
-                    Icon(
-                        imageVector = Icons.Outlined.AccountCircle,
-                        contentDescription = null,
-                        modifier = Modifier.matchParentSize(),
-                        tint = MaterialTheme.colorScheme.primary
-                    )
-                }
+                AccountIcon()
                 32.dp.VerticalSpacer()
                 Text(
                     text = stringResource(Res.string.create_your_account),
@@ -153,6 +148,26 @@ fun App() {
                 Spacer(Modifier.height(it.calculateBottomPadding()))
             }
         }
+    }
+}
+
+@Composable
+private fun ColumnScope.AccountIcon() {
+    Box(
+        Modifier.Companion
+            .align(Alignment.CenterHorizontally)
+            .shadow(12.dp, CircleShape)
+            .clip(CircleShape)
+            .background(Color.White)
+            .fillMaxWidth(0.6f)
+            .aspectRatio(1f)
+    ) {
+        Icon(
+            imageVector = Icons.Outlined.AccountCircle,
+            contentDescription = null,
+            modifier = Modifier.matchParentSize(),
+            tint = MaterialTheme.colorScheme.primary
+        )
     }
 }
 

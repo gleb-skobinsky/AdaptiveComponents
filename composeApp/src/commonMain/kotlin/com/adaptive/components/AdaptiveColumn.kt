@@ -58,6 +58,11 @@ fun <T> Flow<T>.runningHistory(): Flow<History<T>> =
         operation = { accumulator, new -> History(accumulator?.current, new) }
     ).filterNotNull()
 
+data class ClickData(
+    val unconsumed: Boolean = true,
+    val offset: Offset = Offset.Zero
+)
+
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun AdaptiveColumn(
@@ -70,12 +75,11 @@ fun AdaptiveColumn(
     val screenHeight = LocalScreenSize.height
     val imeHeight by rememberUpdatedState(imeHeight())
 
-    var clickUnconsumed by remember { mutableStateOf(true) }
+    var clickData by remember { mutableStateOf(ClickData()) }
     val focusedAreaEvent = remember { FocusedAreaEvent() }
     val focusedArea = remember { FocusedArea() }
     LaunchedEffect(
-        key1 = focusedAreaEvent.id,
-        key2 = focusedAreaEvent.spaceFromBottom != null
+        key1 = focusedAreaEvent.id
     ) {
         if (focusedAreaEvent.id.isNotEmpty()) {
             focusedAreaEvent.spaceFromBottom?.let { capturedBottom ->
@@ -107,13 +111,13 @@ fun AdaptiveColumn(
             .onFocusedBoundsChanged { coordinates ->
                 coordinates?.boundsInWindow()?.let {
                     focusedArea.rect = it
-                    if (clickUnconsumed) {
+                    if (clickData.unconsumed && clickData.offset in it) {
                         focusedAreaEvent.run {
                             id = uuid()
                             rect = it
                             spaceFromBottom = screenHeight - it.bottom
                         }
-                        clickUnconsumed = false
+                        clickData = clickData.copy(unconsumed = false)
                     }
                 }
             }
@@ -123,13 +127,10 @@ fun AdaptiveColumn(
                     // If the software keyboard is hidden, register a new focused area.
                     if (event.type == PointerEventType.Press && imeHeight == 0) {
                         val offset = event.changes.firstOrNull()?.position ?: Offset.Zero
-                        focusedArea.rect?.let {
-                            if (offset in it) {
-                                clickUnconsumed = true
-                            }
-                        } ?: run {
-                            clickUnconsumed = true
-                        }
+                        clickData = ClickData(
+                            unconsumed = true,
+                            offset = offset
+                        )
                     }
                 }
             }

@@ -1,6 +1,7 @@
 package com.adaptive.components
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.scrollBy
@@ -31,6 +32,8 @@ import androidx.compose.ui.layout.boundsInWindow
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.adaptive.components.common.LocalScreenSize
+import com.adaptive.components.util.uuid
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.filterNotNull
@@ -58,13 +61,13 @@ fun <T> Flow<T>.runningHistory(): Flow<History<T>> =
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun AdaptiveColumn(
+    scrollState: ScrollState = rememberScrollState(),
     scrollable: Boolean = true,
     modifier: Modifier = Modifier,
     horizontalPadding: Dp = 16.dp,
     content: @Composable ColumnScope.() -> Unit
 ) {
     val screenHeight = LocalScreenSize.height
-    val scrollState = rememberScrollState()
     val imeHeight by rememberUpdatedState(imeHeight())
 
     var clickUnconsumed by remember { mutableStateOf(true) }
@@ -99,7 +102,6 @@ fun AdaptiveColumn(
         }
     }
 
-    val scrollModifier = if (scrollable) Modifier.verticalScroll(scrollState) else Modifier
     Column(
         modifier = modifier
             .onFocusedBoundsChanged { coordinates ->
@@ -133,7 +135,7 @@ fun AdaptiveColumn(
             }
             .background(MaterialTheme.colorScheme.surface)
             .padding(horizontal = horizontalPadding)
-            .then(scrollModifier),
+            .verticalScroll(scrollState, enabled = scrollable),
         content = content
     )
 }

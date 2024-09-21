@@ -1,0 +1,17 @@
+<resources>
+    <string name="create_your_account">Create your account</string>
+    <string name="first_name_title">First name</string>
+    <string name="first_name_placeholder">Ex: John</string>
+    <string name="last_name_title">Last Name</string>
+    <string name="last_name_placeholder">Ex: Smith</string>
+    <string name="email_title">Email</string>
+    <string name="email_placeholder">Ex: john.smith@gmail.com</string>
+    <string name="phone_title">Phone</string>
+    <string name="phone_placeholder">Ex: +15631111111</string>
+    <string name="password_title">Password</string>
+    <string name="password_placeholder">*********</string>
+    <string name="confirm_password_title">Confirm password</string>
+    <string name="confirm_password_placeholder">*********</string>
+    <string name="sign_up">Sign up</string>
+    <string name="log_in">Log in</string>
+</resources>

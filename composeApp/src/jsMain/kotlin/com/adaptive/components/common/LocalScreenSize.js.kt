@@ -1,4 +1,4 @@
-package com.adaptive.components
+package com.adaptive.components.common
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ReadOnlyComposable

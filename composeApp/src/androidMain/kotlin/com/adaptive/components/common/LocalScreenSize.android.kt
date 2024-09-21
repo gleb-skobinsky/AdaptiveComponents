@@ -1,4 +1,4 @@
-package com.adaptive.components
+package com.adaptive.components.common
 
 import android.app.Activity
 import android.graphics.Rect

@@ -1,4 +1,4 @@
-package com.adaptive.components
+package com.adaptive.components.util
 
 import platform.Foundation.NSUUID
 

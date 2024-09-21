@@ -83,13 +83,7 @@ fun App() {
                 )
             }
         ) {
-            Column(
-                Modifier
-                    .padding(horizontal = 32.dp)
-                    .imePadding()
-                    .verticalScroll(rememberScrollState())
-            ) {
-            //AdaptiveColumn(horizontalPadding = 32.dp) {
+            ImeAdaptiveColumn(horizontalPadding = 32.dp) {
                 Spacer(Modifier.height(it.calculateTopPadding()))
                 32.dp.VerticalSpacer()
                 AccountIcon()

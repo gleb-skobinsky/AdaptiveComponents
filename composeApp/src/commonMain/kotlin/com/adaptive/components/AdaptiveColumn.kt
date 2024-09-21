@@ -65,7 +65,7 @@ data class ClickData(
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun AdaptiveColumn(
+fun ImeAdaptiveColumn(
     scrollState: ScrollState = rememberScrollState(),
     scrollable: Boolean = true,
     modifier: Modifier = Modifier,

@@ -24,7 +24,5 @@ You can open the web application by running the `:composeApp:wasmJsBrowserDevelo
 
 https://github.com/user-attachments/assets/facdd284-e698-4d88-8828-06f355b66970
 
-https://github.com/user-attachments/assets/3a5e33c0-4872-4bac-8f2e-61b6739a9791
-
-
+https://github.com/user-attachments/assets/1034d6a1-1624-4bcb-8619-c6d4db615a20
 
